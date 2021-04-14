@@ -1,9 +1,9 @@
 import cv2
 
 # read image
-img = cv2.imread('image.png')
-img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-thresh, img = cv2.threshold(img, 127, 1, cv2.THRESH_BINARY)
+img_copy = cv2.imread('image.png')
+img_copy = cv2.cvtColor(img_copy, cv2.COLOR_BGR2GRAY)
+thresh, img = cv2.threshold(img_copy, 127, 1, cv2.THRESH_BINARY)
 
 # find first point of our board, which is nearest to left-upper edge
 first_x, first_y = -1, -1
@@ -97,4 +97,18 @@ def have_line(my_board):
 
     return False
 
+if have_line(board) == False:
+    print("don't have line")
+
+(x_1, y_1, x_2, y_2) = have_line(board)
+img_2 = img_copy.copy()
+print((x_1, y_1, x_2, y_2))
+
+first_centre = (centre_x_1_1 + x_1 * step, centre_y_1_1 + y_1 * step)
+second_centre = (centre_x_1_1 + x_2 * step, centre_y_1_1 + y_2 * step)
+
+print((x_1, y_1, x_2, y_2), first_centre, second_centre)
+
+cv2.line(img_2, first_centre, second_centre, (120, 120, 120), 5)
+cv2.imwrite("img_4.png", img_2)
 
